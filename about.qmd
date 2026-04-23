@@ -2,8 +2,5 @@
 title: "About"
 ---
 
-About this site
+This website is resource I will be using to share my work 
 
-```{r}
-1 + 1
-```
