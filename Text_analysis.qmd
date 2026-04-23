@@ -1,6 +1,5 @@
 ---
 title: "Text_analysis"
-author: "Isimbi"
 editor: visual
 editor_options: 
   chunk_output_type: console
