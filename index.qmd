@@ -5,11 +5,11 @@ about:
   template: jolla
   image: DSCN1502.jpg
   links:
-    - icon: Linkedin
-      text: Linkedin
-      href: www.linkedin.com/in/mutoni-henriette-isimbi-4471002a0
+    - icon: Email
+      text: Email
+      href: mailto:isimbi1@stolaf.edu
 ---
 
 
-Welcome to my website  
+Welcome to my website 
 
