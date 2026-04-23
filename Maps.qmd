@@ -1,4 +1,125 @@
 ---
 title: "Maps"
 editor: visual
+editor_options: 
+  chunk_output_type: console
 ---
+
+```{r}
+#| message: false
+#| warning: false
+
+library(sf)
+states <- read_sf("https://rstudio.github.io/leaflet/json/us-states.geojson") 
+
+library(leaflet)
+library(dplyr)
+library(tidyverse)
+```
+
+
+2.  The `states` dataset in the `poliscidata` package contains 135 variables on each of the 50 US states. See [here](https://rdrr.io/cran/poliscidata/man/states.html) for more detail.
+
+Your task is to create a *two* meaningful choropleth plots, one using a numeric variable and one using a categorical variable from `poliscidata::states`. You should make *two* versions of each plot: a static plot using the `maps` package and `ggplot()`, and an interactive plot using the `sf` package and `leaflet()`. Write a sentence or two describing what you can learn from each plot.
+
+Here's some R code and hints to get you going:
+
+```{r, echo = TRUE, eval = FALSE}
+#| message: false
+#| warning: false
+
+polisci_hw4 <- poliscidata::states |>
+  as_tibble() |>
+  mutate(states = str_to_lower(str_squish(as.character(state)))) |>
+  select(states, college, cook_index3)
+
+states_poly_hw4 <- as_tibble(map_data("state")) |>
+  mutate(states = str_to_lower(region)) |>
+  left_join(polisci_hw4, by = "states")
+
+states_sf_clean <- read_sf("https://rstudio.github.io/leaflet/json/us-states.geojson") |>
+  mutate(state_key = str_to_lower(name),
+         states = state_key) |>
+  filter(!name %in% c("Alaska", "Hawaii", "Puerto Rico")) |>
+  left_join(polisci_hw4, by = "states")
+```
+
+static numeric variable :
+
+```{r, echo = TRUE, eval = FALSE}
+#| message: false
+#| warning: false
+
+ggplot(states_poly_hw4,
+       aes(x = long, y = lat, group = group, fill = college)) +
+  geom_polygon(color = "white", linewidth = 0.2) +
+  coord_map("polyconic") +
+  scale_fill_viridis_c( name = "college index") +
+  labs(title = "percentage of people who attend college")
+```
+
+from this map we can learn that majority of states have between 20% and 35% college attendance
+
+interactive numeric variable :
+
+```{r, echo = TRUE, eval = FALSE}
+#| message: false
+#| warning: false
+
+num_pal <- colorNumeric("YlOrRd", domain = states_sf_clean$college)
+
+leaflet(states_sf_clean) |>
+  addPolygons(
+    fillColor = ~num_pal(college),
+    weight = 1, color = "white", 
+    fillOpacity = 0.7,
+    label = ~paste0(name, college),
+   highlightOptions = highlightOptions(   
+      weight = 3, 
+      color = "black", 
+      bringToFront = TRUE
+    )
+  )
+```
+
+This map is very helpful because as a non-American who is not familiar with state names, I get to know the state name and see the percentage college attendance as I interact with the map
+
+static categorical varivale
+
+```{r, echo = TRUE, eval = FALSE}
+#| message: false
+#| warning: false
+
+ggplot(states_poly_hw4, aes(x = long, y = lat, group = group, fill = cook_index3)) +
+  geom_polygon(color = "white", linewidth = 0.2) +
+  coord_map("polyconic") +
+  scale_fill_manual(values = c("Dem" = "blue", "Even" = "purple", "Rep" = "red"), 
+                    name = "Partisanship") +
+  theme_void() +
+  labs(title = "US States Cook partisan index")
+```
+
+from this map, we can see that majority of the US states do not have a prefered cook party
+
+intercative categorical variable
+
+```{r, echo = TRUE, eval = FALSE}
+#| message: false
+#| warning: false
+
+cat_pal <- colorFactor( palette = c("blue", "purple", "red"), 
+  domain = states_sf_clean$cook_index3
+)
+
+leaflet(states_sf_clean) |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addPolygons(
+    fillColor = ~cat_pal(cook_index3),
+    weight = 1, color = "white", fillOpacity = 0.7,
+    label = ~paste0(name, ": ", cook_index3),
+    highlightOptions = highlightOptions(weight = 2, color = "#666", bringToFront = TRUE)
+  ) |>
+  addLegend(pal = cat_pal, values = ~cook_index3, title = "Political Lean")
+```
+
+from this graph we get to interact with the plot and see where the people actually lean towards in term of political party
