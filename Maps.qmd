@@ -24,9 +24,8 @@ Your task is to create a *two* meaningful choropleth plots, one using a numeric 
 
 Here's some R code and hints to get you going:
 
-```{r, echo = TRUE, eval = FALSE}
-#| message: false
-#| warning: false
+```{r}
+#| echo = False
 
 polisci_hw4 <- poliscidata::states |>
   as_tibble() |>
@@ -46,9 +45,8 @@ states_sf_clean <- read_sf("https://rstudio.github.io/leaflet/json/us-states.geo
 
 static numeric variable :
 
-```{r, echo = TRUE, eval = FALSE}
-#| message: false
-#| warning: false
+```{r}
+#| echo = False 
 
 ggplot(states_poly_hw4,
        aes(x = long, y = lat, group = group, fill = college)) +
@@ -62,9 +60,8 @@ from this map we can learn that majority of states have between 20% and 35% coll
 
 interactive numeric variable :
 
-```{r, echo = TRUE, eval = FALSE}
-#| message: false
-#| warning: false
+```{r}
+#| echo = False
 
 num_pal <- colorNumeric("YlOrRd", domain = states_sf_clean$college)
 
@@ -86,9 +83,8 @@ This map is very helpful because as a non-American who is not familiar with stat
 
 static categorical varivale
 
-```{r, echo = TRUE, eval = FALSE}
-#| message: false
-#| warning: false
+```{r}
+#| echo = False
 
 ggplot(states_poly_hw4, aes(x = long, y = lat, group = group, fill = cook_index3)) +
   geom_polygon(color = "white", linewidth = 0.2) +
@@ -103,9 +99,8 @@ from this map, we can see that majority of the US states do not have a prefered 
 
 intercative categorical variable
 
-```{r, echo = TRUE, eval = FALSE}
-#| message: false
-#| warning: false
+```{r}
+#| echo = false
 
 cat_pal <- colorFactor( palette = c("blue", "purple", "red"), 
   domain = states_sf_clean$cook_index3

@@ -39,6 +39,8 @@ tweets <- bind_rows(barack |>
 As a frequent Twitter (now X) user, I was curious to explore how a presidential couple used the platform while in office. This project analyzes tweets posted by President Barack Obama and First Lady Michelle Obama during the final years of President Obama's presidency. By analyzing their tweet history, this project aims to identify patterns in their communication styles and the themes they emphasized when engaging with the public.
 
 ```{r}
+#| echo : false
+
 ## selecting only the relevant variables
 tweets_tidy <- tweets |>
   mutate(hour = parse_number(str_extract(timestamp,"\\s\\d{2}(?=:)")),
@@ -54,6 +56,8 @@ tweets_tidy <- tweets |>
 I would like to see who between President Obama and Michelle tweeted the most.
 
 ```{r}
+#| echo : false
+
  tweets_tidy |>
   mutate(
     clean_text = text |>
@@ -76,6 +80,8 @@ There is an imbalance in the time frame between the two accounts because the dat
 As someone who treats x as her newspaper, that means I spend my mornings and evenings scrolling and sometimes tweeting. I want to see what time of the day the ex presidential couple usually tweeted.
 
 ```{r}
+#| echo : false
+
 tweets_tidy |>
 ggplot(aes(x = hour,y= person, fill = person)) +
   geom_boxplot() +
@@ -93,6 +99,8 @@ This is a horizontal box plot comparing the tweeting time Distribution of Presid
 Next we will be looking at the 15 most common words used by each one to see the popular themes.
 
 ```{r}
+#| echo : false
+
 tweets_tidy|>
   mutate(line = row_number()) |>
   unnest_tokens(word, text, token = "words")  |>
@@ -113,6 +121,7 @@ This figure contains two bar charts comparing the most frequent words used in tw
 Exploring the general feel of both accounts
 
 ```{r}
+#| echo : false
 
 tweets_tidy |>
   unnest_tokens(word, text) |>
@@ -136,6 +145,8 @@ tweets_tidy |>
 This a faceted bar char showing the top five Positive and Negative Words most tweeted by President Obama and Michelle. The visualization is divided into four quadrants. President Obama's negative and positive words, and Michelle's negative and positive words. The x-axis shows the frequency of word usage, all facets have different ranges but the positive words have a greater range compared to the negative ones. The y-axis lists specific words which dominate each person's unique vocabulary. For both president Obama and Michel, the frequency of positive words is greater than that of negative words.
 
 ```{r}
+
+#| echo : false
 
 tweets_tidy|>
   unnest_tokens(word, text, token = "words") |>
