@@ -6,6 +6,7 @@ editor_options:
 ---
 
 ```{r}
+#| include: false 
 #| message: false
 #| warning: false
 
@@ -70,7 +71,7 @@ leaflet(states_sf_clean) |>
     fillColor = ~num_pal(college),
     weight = 1, color = "white", 
     fillOpacity = 0.7,
-    label = ~paste0(name, college),
+    label = ~paste0(name," : ", college,"%"),
    highlightOptions = highlightOptions(   
       weight = 3, 
       color = "black", 
@@ -81,7 +82,7 @@ leaflet(states_sf_clean) |>
 
 This map is very helpful because as a non-American who is not familiar with state names, I get to know the state name and see the percentage college attendance as I interact with the map
 
-static categorical varivale
+static categorical variable
 
 ```{r}
 #| echo: false
@@ -112,9 +113,10 @@ leaflet(states_sf_clean) |>
     fillColor = ~cat_pal(cook_index3),
     weight = 1, color = "white", fillOpacity = 0.7,
     label = ~paste0(name, ": ", cook_index3),
-    highlightOptions = highlightOptions(weight = 2, color = "#666", bringToFront = TRUE)
+    highlightOptions = highlightOptions(weight = 2, color = "grey", 
+                                        bringToFront = TRUE)
   ) |>
   addLegend(pal = cat_pal, values = ~cook_index3, title = "Political Lean")
 ```
 
-from this graph we get to interact with the plot and see where the people actually lean towards in term of political party
+from this graph we get to interact with the plot and see each states political lean.
