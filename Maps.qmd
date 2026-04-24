@@ -9,6 +9,7 @@ editor_options:
 #| include: false 
 #| message: false
 #| warning: false
+#| echo: false
 
 library(sf)
 states <- read_sf("https://rstudio.github.io/leaflet/json/us-states.geojson") 
@@ -19,19 +20,13 @@ library(tidyverse)
 ```
 
 
-2.  The `states` dataset in the `poliscidata` package contains 135 variables on each of the 50 US states. See [here](https://rdrr.io/cran/poliscidata/man/states.html) for more detail.
-
-Your task is to create a *two* meaningful choropleth plots, one using a numeric variable and one using a categorical variable from `poliscidata::states`. You should make *two* versions of each plot: a static plot using the `maps` package and `ggplot()`, and an interactive plot using the `sf` package and `leaflet()`. Write a sentence or two describing what you can learn from each plot.
-
-Here's some R code and hints to get you going:
-
 ```{r}
 #| echo: false
 
 polisci_hw4 <- poliscidata::states |>
   as_tibble() |>
   mutate(states = str_to_lower(str_squish(as.character(state)))) |>
-  select(states, college, cook_index3)
+  select(states, college, pot_policy)
 
 states_poly_hw4 <- as_tibble(map_data("state")) |>
   mutate(states = str_to_lower(region)) |>
@@ -44,7 +39,7 @@ states_sf_clean <- read_sf("https://rstudio.github.io/leaflet/json/us-states.geo
   left_join(polisci_hw4, by = "states")
 ```
 
-static numeric variable :
+## Numeric variable :college attendance index
 
 ```{r}
 #| echo: false 
@@ -54,12 +49,11 @@ ggplot(states_poly_hw4,
   geom_polygon(color = "white", linewidth = 0.2) +
   coord_map("polyconic") +
   scale_fill_viridis_c( name = "college index") +
-  labs(title = "percentage of people who attend college")
+  labs(title = "percentage of people who attend college per state")
 ```
+- from this map we can learn that majority of states have between 20% and 35% college attendance
 
-from this map we can learn that majority of states have between 20% and 35% college attendance
 
-interactive numeric variable :
 
 ```{r}
 #| echo: false
@@ -67,6 +61,8 @@ interactive numeric variable :
 num_pal <- colorNumeric("YlOrRd", domain = states_sf_clean$college)
 
 leaflet(states_sf_clean) |>
+  setView(-96, 37.8, 3) |>
+  addTiles() |>
   addPolygons(
     fillColor = ~num_pal(college),
     weight = 1, color = "white", 
@@ -80,43 +76,39 @@ leaflet(states_sf_clean) |>
   )
 ```
 
-This map is very helpful because as a non-American who is not familiar with state names, I get to know the state name and see the percentage college attendance as I interact with the map
+- This map is very helpful because as a non-American who is not familiar with state names, I get to know the state name and see the percentage college attendance as I interact with the map
 
-static categorical variable
+## Categorical variable : laws on marijuana consumption
 
 ```{r}
 #| echo: false
 
-ggplot(states_poly_hw4, aes(x = long, y = lat, group = group, fill = cook_index3)) +
+ggplot(states_poly_hw4, aes(x = long, y = lat, group = group, fill = pot_policy)) +
   geom_polygon(color = "white", linewidth = 0.2) +
   coord_map("polyconic") +
-  scale_fill_manual(values = c("Dem" = "blue", "Even" = "purple", "Rep" = "red"), 
-                    name = "Partisanship") +
   theme_void() +
-  labs(title = "US States Cook partisan index")
+  labs(title = "US States laws on marijuana")
 ```
-
-from this map, we can see that majority of the US states do not have a prefered cook party
-
-intercative categorical variable
+- From this graph we get to see each states legal laws on marijuana consumption. we can tell from the map that the marijuana is decriminalized in most regions except for the south where it is not legal at all.
 
 ```{r}
 #| echo: false
 
 cat_pal <- colorFactor( palette = c("blue", "purple", "red"), 
-  domain = states_sf_clean$cook_index3
+  domain = states_sf_clean$pot_policy
 )
 
 leaflet(states_sf_clean) |>
-  addProviderTiles(providers$CartoDB.Positron) |>
+   setView(-96, 37.8, 3) |>
+  addTiles() |>
   addPolygons(
-    fillColor = ~cat_pal(cook_index3),
+    fillColor = ~cat_pal(pot_policy),
     weight = 1, color = "white", fillOpacity = 0.7,
-    label = ~paste0(name, ": ", cook_index3),
-    highlightOptions = highlightOptions(weight = 2, color = "grey", 
+    label = ~paste0(name, ": ", pot_policy),
+    highlightOptions = highlightOptions(weight = 3, color = "black", 
                                         bringToFront = TRUE)
   ) |>
-  addLegend(pal = cat_pal, values = ~cook_index3, title = "Political Lean")
+  addLegend(pal = cat_pal, values = ~pot_policy, title = "view on marijuana")
 ```
 
-from this graph we get to interact with the plot and see each states political lean.
+- From this graph we get to interact with the plot and see each states legal laws on marijuana consumption. we can tell from the map that the marijuana is decriminalized in most regions except for the south where it is not legal at all.
