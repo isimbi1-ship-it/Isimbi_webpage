@@ -1,5 +1,7 @@
 ---
-title: "Isimbi_webpage"
+title: "Murakaza neza"
+
+theme: flatly
 
 about:
   template: jolla
@@ -8,14 +10,8 @@ about:
     - icon: Email
       text: Email
       href: mailto:isimbi1@stolaf.edu
-    - icon: Linkedin
-      text: Linkedin
-      href: www.linkedin.com/in/mutoni-henriette-isimbi-4471002a0
-      
 ---
 
 
-Welcome to my website
-
-My name is Isimbi Mutoni Henriette. I am a senior majoring in Biology at St Olaf college. I hope to pursue a research career in genetics or immunology. Our genetic and immune system amaze me, therefore, I would like to learn more about them and how they can be used to fight diseases. I currently do molecular research here on Tetrahymena *thermophila*, here at St Olaf college. if you are interested to learn more about my research, feel free to message me on linkedin or to send me an email. 
+My name is Isimbi Mutoni Henriette. Fun fact ; I am from Rwanda and Murakaza neza means welcome in Kinyarwanda, our national language. I am a senior majoring in Biology at St Olaf college. I hope to pursue a research career in genetics or immunology. Our genetic and immune system amaze me, therefore, I would like to learn more about them and how they can be used to fight diseases. I currently do molecular research on Tetrahymena *thermophila*, here at St Olaf college. if you are interested to learn more about my research, feel free to send me an email :) 
 

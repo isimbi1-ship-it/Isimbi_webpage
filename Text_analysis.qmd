@@ -34,7 +34,6 @@ tweets <- bind_rows(barack |>
   mutate(timestamp = ymd_hms(timestamp))
 ```
 
-# First couple tweets
 
 As a frequent Twitter (now X) user, I was curious to explore how a presidential couple used the platform while in office. This project analyzes tweets posted by President Barack Obama and First Lady Michelle Obama during the final years of President Obama's presidency. By analyzing their tweet history, this project aims to identify patterns in their communication styles and the themes they emphasized when engaging with the public.
 

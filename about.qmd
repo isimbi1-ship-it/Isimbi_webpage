@@ -2,5 +2,6 @@
 title: "About"
 ---
 
-This website is resource I will be using to share my work. 
+This website is resource I will be using to share my work.
+Here is a [link](https://github.com/isimbi1-ship-it/Isimbi_webpage.git) to this Website's code.
 
