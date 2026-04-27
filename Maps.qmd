@@ -1,5 +1,5 @@
 ---
-title: "Maps"
+title: " US state Maps"
 editor: visual
 editor_options: 
   chunk_output_type: console
@@ -19,9 +19,9 @@ library(dplyr)
 library(tidyverse)
 ```
 
-
 ```{r}
 #| echo: false
+#| include: false
 
 polisci_hw4 <- poliscidata::states |>
   as_tibble() |>
@@ -39,7 +39,9 @@ states_sf_clean <- read_sf("https://rstudio.github.io/leaflet/json/us-states.geo
   left_join(polisci_hw4, by = "states")
 ```
 
-## Numeric variable :college attendance index
+# Numeric variable : college attendance index
+
+## Static map
 
 ```{r}
 #| echo: false 
@@ -49,11 +51,12 @@ ggplot(states_poly_hw4,
   geom_polygon(color = "white", linewidth = 0.2) +
   coord_map("polyconic") +
   scale_fill_viridis_c( name = "college index") +
-  labs(title = "percentage of people who attend college per state")
+  labs(title = "percentage of people who attend college per state", caption = "data from = poliscidata package")
 ```
-- from this map we can learn that majority of states have between 20% and 35% college attendance
 
+-   from this map we can learn that majority of states have between 20% and 35% college attendance
 
+## Interactive map
 
 ```{r}
 #| echo: false
@@ -71,14 +74,16 @@ leaflet(states_sf_clean) |>
    highlightOptions = highlightOptions(   
       weight = 3, 
       color = "black", 
-      bringToFront = TRUE
+      bringToFront = TRUE,
     )
   )
 ```
 
-- This map is very helpful because as a non-American who is not familiar with state names, I get to know the state name and see the percentage college attendance as I interact with the map
+-   This map is very helpful because as a non-American who is not familiar with state names, I get to know the state name and see the percentage college attendance as I interact with the map
 
-## Categorical variable : laws on marijuana consumption
+# Categorical variable : laws on marijuana consumption
+
+## Static map
 
 ```{r}
 #| echo: false
@@ -87,9 +92,12 @@ ggplot(states_poly_hw4, aes(x = long, y = lat, group = group, fill = pot_policy)
   geom_polygon(color = "white", linewidth = 0.2) +
   coord_map("polyconic") +
   theme_void() +
-  labs(title = "US States laws on marijuana")
+  labs(title = "US States laws on marijuana", caption = "data from = poliscidata package")
 ```
-- From this graph we get to see each states legal laws on marijuana consumption. we can tell from the map that the marijuana is decriminalized in most regions except for the south where it is not legal at all.
+
+-   From this graph we get to see each states legal laws on marijuana consumption. we can tell from the map that the marijuana is decriminalized in most regions except for the south where it is not legal at all.
+
+## Interactive map
 
 ```{r}
 #| echo: false
@@ -111,4 +119,4 @@ leaflet(states_sf_clean) |>
   addLegend(pal = cat_pal, values = ~pot_policy, title = "view on marijuana")
 ```
 
-- From this graph we get to interact with the plot and see each states legal laws on marijuana consumption. we can tell from the map that the marijuana is decriminalized in most regions except for the south where it is not legal at all.
+-   From this graph we get to interact with the plot and see each states legal laws on marijuana consumption. we can tell from the map that the marijuana is decriminalized in most regions except for the south where it is not legal at all.

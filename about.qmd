@@ -2,5 +2,5 @@
 title: "About"
 ---
 
-This website is resource I will be using to share my work 
+This website is resource I will be using to share my work. 
 

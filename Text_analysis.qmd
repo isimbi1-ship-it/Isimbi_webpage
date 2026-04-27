@@ -1,5 +1,5 @@
 ---
-title: "Text_analysis"
+title: "First couple tweets"
 editor: visual
 editor_options: 
   chunk_output_type: console
@@ -34,7 +34,7 @@ tweets <- bind_rows(barack |>
   mutate(timestamp = ymd_hms(timestamp))
 ```
 
-## First couple tweets
+# First couple tweets
 
 As a frequent Twitter (now X) user, I was curious to explore how a presidential couple used the platform while in office. This project analyzes tweets posted by President Barack Obama and First Lady Michelle Obama during the final years of President Obama's presidency. By analyzing their tweet history, this project aims to identify patterns in their communication styles and the themes they emphasized when engaging with the public.
 
@@ -160,6 +160,6 @@ tweets_tidy|>
 
 This is a stacked bar chart showing the proportion of positive and negative sentiment by person. The y-axis represents the proportion of sentiment words, ranging from 0 to 1.0. Both individuals show a very high proportion of positive sentiment represented by teal compared to negative sentiment represented by coral. Michelle’s bar shows a slightly higher percentage of positive words than president Obama’s, though both are overwhelmingly positive which reflects the formal and optimistic tone of their public communications.
 
-## Conclusion
+# Conclusion
 
 This analysis compared the Twitter activity of President Barack Obama and Michelle Obama during the final years of President Obama's presidency.The analysis revealed that both individuals tended to tweet during the same time and that Michelle Obama tweeted more frequently. Word frequency analysis and sentiment analysis revealed common optimistic language but differences in thematic focus. President Obama’s tweets often referenced national issues and civic engagement, while Michelle Obama’s tweets emphasized education and youth initiatives.
